@@ -15,6 +15,7 @@
 Direction findDirOrder();
 void floorOrder();
 void elevatorOrder();
+Order* takeOrder();
 void destSort();
 void test();
 
