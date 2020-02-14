@@ -1,6 +1,7 @@
-SOURCES := main.c
 
+SOURCES := main.c
 SOURCE_DIR := source
+
 BUILD_DIR := build
 
 OBJ := $(patsubst %.c,$(BUILD_DIR)/%.o,$(SOURCES))
@@ -12,6 +13,7 @@ CC := gcc
 CFLAGS := -O0 -g3 -Wall -Werror -std=c11 -I$(SOURCE_DIR)
 LDFLAGS := -L$(BUILD_DIR) -ldriver -lcomedi
 
+# når makefile startes vil den prøve å kjøre  hva .DEFAULT_GOAL er definert til
 .DEFAULT_GOAL := elevator
 
 elevator : $(OBJ) | $(DRIVER_ARCHIVE)
