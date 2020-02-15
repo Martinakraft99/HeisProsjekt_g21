@@ -10,7 +10,7 @@
 
 
 int readFloors(){
-    for(int i{1}; i<=4; i++){
+    for(int i=1; i<=4; i++){
         if(hw_read_floor_sensor(i)==1){
             return i;
         }
@@ -25,18 +25,18 @@ int go_to_defined_pos(){
     return readFloors();
 }
 
-void update elevator_state(struct elevator_state& e){
-    e.pos = destinations[0.dest];
-    if(destinations[1.dest]==0){
-        e.dir = 0;
+void update_elevator_state(struct elevator_state* ep){
+    ep->pos = destinations[0].destination;
+    if(destinations[1].destination==0){
+        ep->dir = 0;
     }
     else{
-        e.dir = destinations[1.dest] - destinations[0.dest];
+        ep->dir = destinations[1].destination - destinations[0].destination;
     }
 }
-void initialize elevator_state(struct elevator_state& e){
-    e.direction = 0;
-    e.pos = go_to_defined_pos();
+void initialize_elevator_state(struct elevator_state* ep){
+    ep->dir = 0;
+    ep->pos = go_to_defined_pos();
 }
 
 

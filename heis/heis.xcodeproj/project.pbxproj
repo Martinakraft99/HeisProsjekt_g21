@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5BA9A66623F728B40083D2E1 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 5BA9A66523F728B40083D2E1 /* main.c */; };
 		5BA9A67223F729100083D2E1 /* elevatorState.c in Sources */ = {isa = PBXBuildFile; fileRef = 5BA9A67123F729100083D2E1 /* elevatorState.c */; };
+		5BA9A67523F81D230083D2E1 /* orderFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = 5BA9A67423F81D230083D2E1 /* orderFunctions.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +30,10 @@
 		5BA9A66F23F728ED0083D2E1 /* orderSystHeislab */ = {isa = PBXFileReference; lastKnownFileType = folder; name = orderSystHeislab; path = ../orderSystHeislab/orderSystHeislab; sourceTree = "<group>"; };
 		5BA9A67023F729100083D2E1 /* elevatorState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = elevatorState.h; sourceTree = "<group>"; };
 		5BA9A67123F729100083D2E1 /* elevatorState.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = elevatorState.c; sourceTree = "<group>"; };
+		5BA9A67323F818A30083D2E1 /* definitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
+		5BA9A67423F81D230083D2E1 /* orderFunctions.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = orderFunctions.c; sourceTree = "<group>"; };
+		5BA9A67623F81D250083D2E1 /* orderFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = orderFunctions.h; sourceTree = "<group>"; };
+		5BA9A67723F81D730083D2E1 /* hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hardware.h; path = ../../skeleton_project/source/hardware.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +68,10 @@
 			isa = PBXGroup;
 			children = (
 				5BA9A66523F728B40083D2E1 /* main.c */,
+				5BA9A67723F81D730083D2E1 /* hardware.h */,
+				5BA9A67623F81D250083D2E1 /* orderFunctions.h */,
+				5BA9A67423F81D230083D2E1 /* orderFunctions.c */,
+				5BA9A67323F818A30083D2E1 /* definitions.h */,
 				5BA9A67023F729100083D2E1 /* elevatorState.h */,
 				5BA9A67123F729100083D2E1 /* elevatorState.c */,
 			);
@@ -127,6 +136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BA9A66623F728B40083D2E1 /* main.c in Sources */,
+				5BA9A67523F81D230083D2E1 /* orderFunctions.c in Sources */,
 				5BA9A67223F729100083D2E1 /* elevatorState.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

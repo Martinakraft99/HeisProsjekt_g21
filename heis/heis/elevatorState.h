@@ -10,18 +10,18 @@
 #define elevatorState_h
 
 #include <stdio.h>
-#include "definitions"
+#include "definitions.h"
 
 
-struct elevator_State{
+typedef struct elevator_state{
     Position pos;
     Direction dir;
-};
+}elevator_state;
 
 int readFloors();
 int go_to_defined_pos();
-void update elevator_state(struct elevator_state& e);
-void initialize elevator_state(struct elevator_state& e);
+void update_elevator_state(struct elevator_state* ep);
+void initialize_elevator_state(struct elevator_state* ep);
 
 
 #endif /* elevatorState_h */

@@ -7,9 +7,9 @@
 //
 
 #include <stdio.h>
+#include "orderFunctions.h"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Hello, World!\n");
+    test();
     return 0;
 }

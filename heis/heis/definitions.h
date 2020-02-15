@@ -18,13 +18,20 @@ typedef enum {floors, btwFandS ,btwSandT ,btwtandF}Position;
 typedef enum {Down = -1, Idle = 0,UP =1}Direction;
 //enum Orders{DownFourth = -4, DownThird = -3, DownSecond = -2, UpFirst = 1, UpSecond = 2, UpThird3};
 
-struct Order{
+typedef struct Order{
     Floor destination;
     Direction dir;
-};
+}Order;
 
-Floor destinations[4];
-struct Order orders[8];
+
+/*typedef struct Order_List{
+    struct Order destinations[4];
+    Direction dir;
+}OrderList;
+*/
+
+struct Order destinations[4];
+struct Order orders[10];
 
 
 
