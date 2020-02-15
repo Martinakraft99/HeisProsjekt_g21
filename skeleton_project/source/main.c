@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
-#include "hardware.h"
 
+#include "hardware.h"
 #include "start_system.h"
 #include "get_input.h"
 #include "control_signals.h"
 #include "new_order.h"
-
 
 
 static void clear_all_order_lights() {
@@ -22,30 +21,7 @@ static void clear_all_order_lights() {
 }
 
 
-
-static void sigint_handler(int sig) {
-    (void)(sig);
-    printf("Terminating elevator\n");
-    hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-    exit(0);
-}
-
 int main() {
-
-
-    int error = hardware_init();
-    if (error != 0) {
-        fprintf(stderr, "Unable to initialize hardware\n");
-        exit(1);
-    }
-    signal(SIGINT, sigint_handler);
-
-
-
-
-
-    printf("=== Example Program ===\n");
-    printf("Press the stop button on the elevator panel to exit\n");
 
     start_system();
 
