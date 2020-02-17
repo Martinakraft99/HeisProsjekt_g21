@@ -3,10 +3,11 @@
 #include <signal.h>
 
 #include "hardware.h"
+#include "hardware_input.h"
+#include "elevator_state.h"
 #include "start_system.h"
-#include "get_input.h"
 #include "control_signals.h"
-#include "new_order.h"
+#include "request_handler.h"
 
 
 static void clear_all_order_lights() {
