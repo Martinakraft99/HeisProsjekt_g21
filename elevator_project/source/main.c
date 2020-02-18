@@ -8,7 +8,7 @@
 #include "start_system.h"
 #include "control_signals.h"
 #include "request_handler.h"
-
+#include "motor_state.h"
 
 static void clear_all_order_lights() {
     HardwareOrder order_types[3] = { HARDWARE_ORDER_UP, HARDWARE_ORDER_INSIDE, HARDWARE_ORDER_DOWN };
@@ -21,10 +21,45 @@ static void clear_all_order_lights() {
     }
 }
 
-
 int main() {
 
-    start_system();
+    ElevatorState e1 = {-1,0};
+    ElevatorState* ep1 = &e1;
+
+    start_system(ep1);
+
+    /*
+    while(HARDWARE_MOVEMENT_STOP){
+      Order* op1 = takeOrder();
+      if(op1 != NULL){
+        printf("Order: %d\nDirection: %d\n", op1->destination+1, (-1)*(op1->dir-1));
+      }
+    }
+    */
+
+
+    while(1){
+
+      if(hardware_read_stop_signal()){
+          hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+          break;
+      }
+
+      update_elevator_pos(ep1);
+      if (ep1->pos != -1) hardware_command_floor_indicator_on(ep1->pos);
+
+      if (destinations[0].destination == -1) {
+        takeOrder(&destinations[0]);
+
+      }
+
+      if(destinations[0].destination != -1){
+        motorStateMachine(destinations[0].destination, ep1->pos);
+        if (ep1->pos == destinations[0].destination)
+            destinations[0].destination = -1;
+      }
+
+    }
 
     while ( 0 ) {
         if(hardware_read_stop_signal()){

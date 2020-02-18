@@ -14,7 +14,7 @@ void sigint_handler(int sig) {
     exit(0);
 }
 
-void start_system() {
+void start_system(ElevatorState* e1) {
 
 	int error = hardware_init();
     if (error != 0) {
@@ -28,10 +28,10 @@ void start_system() {
 
 
 
-    ElevatorState e1 = {0};
-    initialize_elevator_state(&e1);
 
-    printf("Floor: %d\n", e1.pos);
+    initialize_elevator_state(e1);
+
+    printf("Floor: %d\n", e1->pos);
 
 
 }

@@ -10,13 +10,19 @@
 
 
 int go_to_defined_pos(){
-    while (readFloors() == 0) {
+    while (readFloors() == -1) {
         hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
     }
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     return readFloors();
 }
 
+
+void update_elevator_pos(ElevatorState* ep){
+  if(readFloors() != -1){
+    ep->pos = readFloors();
+  }
+}
 /*void update_elevator_state(ElevatorState* ep){
     ep->pos = destinations[0].destination;
     if(destinations[1].destination==0){

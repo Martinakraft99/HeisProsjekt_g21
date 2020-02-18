@@ -10,20 +10,15 @@
 
 
 typedef enum {
-  first, second, third, fourth
+  undef = -1, first, second, third, fourth
 } Floor;
-
-typedef enum {
-  floors,
-} Position;
-
 
 /**
  * @brief Start up of the system.
  */
 
  typedef struct{
-     Position pos;
+     Floor pos;
      HardwareMovement dir;
  } ElevatorState;
 
@@ -48,6 +43,7 @@ typedef enum {
 */
 void initialize_elevator_state(ElevatorState* ep);
 
+void update_elevator_pos(ElevatorState* ep);
 
 
 #endif
