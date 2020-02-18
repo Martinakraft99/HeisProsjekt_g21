@@ -4,6 +4,7 @@
 
 #include "start_system.h"
 #include "hardware.h"
+#include "elevator_state.h"
 
 // was static before
 void sigint_handler(int sig) {
@@ -11,7 +12,7 @@ void sigint_handler(int sig) {
     printf("Terminating elevator\n");
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     exit(0);
-} 
+}
 
 void start_system() {
 
@@ -25,5 +26,12 @@ void start_system() {
     printf("=== Running elevator program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
-    hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
+
+
+    ElevatorState e1 = {0};
+    initialize_elevator_state(&e1);
+
+    printf("Floor: %d\n", e1.pos);
+
+
 }
