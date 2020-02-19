@@ -12,13 +12,13 @@ int readFloors(){
     return -1;
 }
 
-void takeOrder(Order* op){
+void takeOrder(Order* op, ElevatorState* ep){
     for(int i = 0; i< HARDWARE_NUMBER_OF_FLOORS; i++){
         for(int j = 0; j<3;j++){
             if(hardware_read_order(i,j)==1){
                 op->destination =  i;
                 op->dir = j;
-                new_request(op);
+				place_order(op, ep);
             }
         }
     }

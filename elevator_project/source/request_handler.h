@@ -10,6 +10,15 @@ typedef struct {
 } Order;
 
 Order destinations[HARDWARE_NUMBER_OF_FLOORS] = {{-1,1}};
-//struct Order* orders[10];
+Order orders[10] = { {-1, 1} };
+
+
+void place_order(Order* op, ElevatorState* ep);
+void destination_sort_ascending();
+void destination_sort_descending();
+void swap(Order *o1, Order *o2);
+void fillDestination();
+void deleteFirstDestination();
+
 
 #endif

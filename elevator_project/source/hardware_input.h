@@ -17,7 +17,7 @@
  * @brief Return floor.
  */
 int readFloors();
-void takeOrder(Order* op);
+void takeOrder(Order* op, ElevatorState* ep);
 
 
 #endif
