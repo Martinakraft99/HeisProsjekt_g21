@@ -1,37 +1,41 @@
+/**
+* @file
+* @brief Main.
+*
+*/
 #include <stdio.h>
-#include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
+#include <time.h>
 
 #include "hardware.h"
 #include "hardware_input.h"
 #include "elevator_state.h"
-#include "start_system.h"
-#include "control_signals.h"
-#include "request_handler.h"
 #include "motor_state.h"
+#include "start_system.h"
+#include "request_handler.h"
 
 static void clear_all_order_lights() {
-    HardwareOrder order_types[3] = { HARDWARE_ORDER_UP, HARDWARE_ORDER_INSIDE, HARDWARE_ORDER_DOWN };
+  HardwareOrder order_types[3] = { HARDWARE_ORDER_UP, HARDWARE_ORDER_INSIDE, HARDWARE_ORDER_DOWN };
 
-    for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
-        for(int i = 0; i < 3; i++){
-            HardwareOrder type = order_types[i];
-            hardware_command_order_light(f, type, 0);
-        }
+  for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
+    for(int i = 0; i < 3; i++){
+      HardwareOrder type = order_types[i];
+      hardware_command_order_light(f, type, 0);
     }
+  }
 }
 
-void printOperatingInfo(ElevatorState* ep){
-  int check_floor = readFloors();
-  if (( check_floor != -1) && (check_floor != ep1->pos) ) {
-    printf("Floor %d:\nDestination: ", check_floor+1);
-    for(int i = 0; i< HARDWARE_NUMBER_OF_FLOORS;i++){
-      printf("%d ", destinations[i].destination+1);
+void print_operating_info() {
+    int check_floor = hardware_input_read_floors();
+    if (( check_floor != -1) && (check_floor != ELEVATOR_STATE->pos) ) {
+        printf("Floor %d:\nDestination: ", check_floor+1);
+        for(int i = 0; i< HARDWARE_NUMBER_OF_FLOORS;i++){
+        printf("%d ", destinations[i].pos+1);
     }
     printf("\nOrders: ");
-    for(int i = 0; i< NUMBER_OF_POSSIBLE_ORDERS;i++){
-      printf("%d ", orders[i].destination+1);
+    for(int i = 0; i< HARDWARE_NUMBER_OF_ORDER_BUTTONS;i++){
+        printf("%d ", orders[i].pos+1);
     }
     printf("\n");
   }
@@ -41,27 +45,22 @@ void printOperatingInfo(ElevatorState* ep){
 int main() {
 
     start_system();
+    while ( !hardware_read_stop_signal() ){
 
-    while (!hardware_read_stop_signal()){
+        if ( 1 ) {
 
-      printOperatingInfo(ep1);
+            print_operating_info();
+            update_elevator_pos();
+            elevator_state_update_floor_light();
+            hardware_input_take_order();
+            motor_state_move_elevator();
 
-      update_elevator_pos();
+        }
+        if (destinations[0].pos == -1) { fillDestination(); }
+  }
 
-      if (ep1->pos != -1) hardware_command_floor_indicator_on(ep1->pos);
+  hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+  clear_all_order_lights();
 
-      takeOrder(ep1);
-
-      move_elevator();
-
-      if(destinations[0].destination == -1){
-        fillDestination(ep1);
-      }
-    }
-
-    hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-
-    clear_all_order_lights();
-
-    return 0;
+  return 0;
 }

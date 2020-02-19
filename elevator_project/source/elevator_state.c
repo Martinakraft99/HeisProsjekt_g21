@@ -7,22 +7,20 @@
 #include "hardware.h"
 #include "elevator_state.h"
 
-ElevatorState e1 = {-1,0};
-ElevatorState* ep1 = &e1;
-
+Order* ELEVATOR_STATE = &(Order){-1, 0};
 
 int go_to_defined_pos(){
-    while (readFloors() == -1) {
+    while (hardware_input_read_floors() == -1)
         hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-    }
+
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-    return readFloors();
+    return hardware_input_read_floors();
 }
 
 
 void update_elevator_pos(){
-  if(readFloors() != -1){
-    ep1->pos = readFloors();
+  if(hardware_input_read_floors() != -1){
+    ELEVATOR_STATE->pos = hardware_input_read_floors();
   }
 }
 /*void update_elevator_state(ElevatorState* ep){
@@ -36,8 +34,13 @@ void update_elevator_pos(){
 }
 */
 
-void initialize_elevator_state(ElevatorState* ep){
-    ep->dir = 0;
-    ep->pos = go_to_defined_pos();
+void initialize_elevator_state(){
+    ELEVATOR_STATE->dir = 0;
+    ELEVATOR_STATE->pos = go_to_defined_pos();
     return;
+}
+
+void elevator_state_update_floor_light() {
+  if (ELEVATOR_STATE->pos != -1)
+      hardware_command_floor_indicator_on(ELEVATOR_STATE->pos);
 }

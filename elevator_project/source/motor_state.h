@@ -1,14 +1,23 @@
+/**
+* @file
+* @brief Motor state.
+*
+*/
+#ifndef MOTOR_STATE_H
+#define MOTOR_STATE_H
+
 #include "hardware.h"
 #include "elevator_state.h"
 #include "request_handler.h"
 
+/**
+* @brief
+*/
+void motor_state_transition(Floor dest, Floor pos);
 
-#ifndef motor_state_h
-#define motor_state_h
-
-
-void motorStateMachine(Floor dest, Floor pos);
-void move_elevator();
-
+/**
+* @brief
+*/
+void motor_state_move_elevator();
 
 #endif

@@ -1,23 +1,25 @@
 /**
- * @file
- * @brief Read hardware input.
- *
- */
- #include "elevator_state.h"
- #include "hardware.h"
- #include "request_handler.h"
+* @file
+* @brief Hardware input.
+*
+*/
+#ifndef HARDWARE_INPUT_H
+#define HARDWARE_INPUT_H
 
- #ifndef hardware_input_h
- #define hardware_input_h
+#include "elevator_state.h"
+#include "hardware.h"
+#include "request_handler.h"
 
+/**
+* @brief
+*
+* @return int floor.
+*/
+int hardware_input_read_floors();
 
-
-
- /**
- * @brief Return floor.
- */
-int readFloors();
-void takeOrder(ElevatorState* ep);
-
+/**
+* @brief
+*/
+void hardware_input_take_order();
 
 #endif

@@ -1,49 +1,54 @@
 /**
- * @file
- * @brief State machine.
- *
- */
+* @file
+* @brief State machine.
+*
+*/
+#ifndef ELEVATOR_STATE_H
+#define ELEVATOR_STATE_H
+
 #include "hardware.h"
 
-#ifndef elevator_state_h
-#define elevator_state_h
+/**
+* @brief Floor position used in struct @c Order.
+*/
+typedef enum { undef = -1, first, second, third, fourth } Floor;
 
 /**
 * @brief
 */
-
-typedef enum {
-  undef = -1, first, second, third, fourth
-} Floor;
-
-/**
- * @brief
- */
- typedef struct{
-     Floor pos;
-     HardwareMovement dir;
- } ElevatorState;
-
- ElevatorState e1;
- ElevatorState* ep1;
-
-
+typedef struct {
+    Floor pos;
+    HardwareOrder dir;
+} Order;
 
 /**
-* @brief Elevator goes down if not in defined state.
-* @return floor.
+* @brief Elevator state.
 */
- int go_to_defined_pos();
+Order* ELEVATOR_STATE;
+
+#include "request_handler.h"
+#include "motor_state.h"
 
 /**
 * @brief
 */
-void initialize_elevator_state(ElevatorState* ep);
+void initialize_elevator_state();
 
 /**
 * @brief
 */
 void update_elevator_pos();
 
+/**
+* @brief
+* @return floor.
+*/
+ int go_to_defined_pos();
+
+
+/**
+* @brief
+*/
+void elevator_state_update_floor_light();
 
 #endif

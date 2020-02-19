@@ -1,14 +1,13 @@
 /**
- * @file
- * @brief Start up progress for elevator.
- *
- */
+* @file
+* @brief Start up progress for elevator.
+*
+*/
+#ifndef START_SYSTEM_H
+#define START_SYSTEM_H
 
+#include "hardware.h"
 #include "elevator_state.h"
-
- #ifndef start_system_h
- #define start_system_h
-
 
 /**
 * @brief Sigint handler.
@@ -17,8 +16,8 @@ void sigint_handler(int sig);
 
 
 /**
- * @brief Start up of the system.
- */
+* @brief Start up of the system.
+*/
 void start_system();
 
 #endif
