@@ -19,6 +19,6 @@ void sigint_handler(int sig);
 /**
  * @brief Start up of the system.
  */
-void start_system(ElevatorState* e1);
+void start_system();
 
 #endif

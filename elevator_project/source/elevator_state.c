@@ -7,6 +7,8 @@
 #include "hardware.h"
 #include "elevator_state.h"
 
+ElevatorState e1 = {-1,0};
+ElevatorState* ep1 = &e1;
 
 
 int go_to_defined_pos(){
@@ -18,9 +20,9 @@ int go_to_defined_pos(){
 }
 
 
-void update_elevator_pos(ElevatorState* ep){
+void update_elevator_pos(){
   if(readFloors() != -1){
-    ep->pos = readFloors();
+    ep1->pos = readFloors();
   }
 }
 /*void update_elevator_state(ElevatorState* ep){

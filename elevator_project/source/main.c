@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <time.h>
 
 #include "hardware.h"
 #include "hardware_input.h"
@@ -21,92 +22,43 @@ static void clear_all_order_lights() {
     }
 }
 
+
+
+
+
 int main() {
 
-    ElevatorState e1 = {-1,0};
-    ElevatorState* ep1 = &e1;
-
-    start_system(ep1);
-
-    /*
-    while(HARDWARE_MOVEMENT_STOP){
-      Order* op1 = takeOrder();
-      if(op1 != NULL){
-        printf("Order: %d\nDirection: %d\n", op1->destination+1, (-1)*(op1->dir-1));
-      }
-    }
-    */
+    start_system();
 
 
-    while(1){
 
-      if(hardware_read_stop_signal()){
-          hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-          break;
+    while (!hardware_read_stop_signal()){
+      int check_floor = readFloors();
+      if (( check_floor != -1) && (check_floor != ep1->pos) ) {
+        printf("Floor %d:\nDestination: ", check_floor+1);
+        for(int i = 0; i< HARDWARE_NUMBER_OF_FLOORS;i++){
+          printf("%d ", destinations[i].destination+1);
+        }
+        printf("\n");
       }
 
-      update_elevator_pos(ep1);
+
+      update_elevator_pos();
+
       if (ep1->pos != -1) hardware_command_floor_indicator_on(ep1->pos);
 
-      if (destinations[0].destination == -1) {
-        takeOrder(&destinations[0]);
+      takeOrder(ep1);
 
-      }
-
-      if(destinations[0].destination != -1){
-        motorStateMachine(destinations[0].destination, ep1->pos);
-        if (ep1->pos == destinations[0].destination)
-            destinations[0].destination = -1;
-      }
+      move_elevator();
 
     }
 
-    while ( 0 ) {
-        if(hardware_read_stop_signal()){
-            hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-            break;
-        }
 
-        if(hardware_read_floor_sensor(0)){
-            hardware_command_movement(HARDWARE_MOVEMENT_UP);
-        }
-        if(hardware_read_floor_sensor(HARDWARE_NUMBER_OF_FLOORS - 1)){
-            hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-        }
 
-        /* All buttons must be polled, like this: */
-        for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
-            if(hardware_read_order(f, HARDWARE_ORDER_INSIDE)){
-                hardware_command_floor_indicator_on(f);
-            }
-        }
 
-        /* Lights are set and cleared like this: */
-        for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
-            /* Internal orders */
-            if(hardware_read_order(f, HARDWARE_ORDER_INSIDE)){
-                hardware_command_order_light(f, HARDWARE_ORDER_INSIDE, 1);
-            }
+    hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 
-            /* Orders going up */
-            if(hardware_read_order(f, HARDWARE_ORDER_UP)){
-                hardware_command_order_light(f, HARDWARE_ORDER_UP, 1);
-            }
-
-            /* Orders going down */
-            if(hardware_read_order(f, HARDWARE_ORDER_DOWN)){
-                hardware_command_order_light(f, HARDWARE_ORDER_DOWN, 1);
-            }
-        }
-
-        if(hardware_read_obstruction_signal()){
-            hardware_command_stop_light(1);
-            clear_all_order_lights();
-        }
-        else{
-            hardware_command_stop_light(0);
-        }
-    }
+    clear_all_order_lights();
 
     return 0;
 }

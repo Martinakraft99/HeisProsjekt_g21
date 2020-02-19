@@ -8,19 +8,24 @@
 #ifndef elevator_state_h
 #define elevator_state_h
 
+/**
+* @brief
+*/
 
 typedef enum {
   undef = -1, first, second, third, fourth
 } Floor;
 
 /**
- * @brief Start up of the system.
+ * @brief
  */
-
  typedef struct{
      Floor pos;
      HardwareMovement dir;
  } ElevatorState;
+
+ ElevatorState e1;
+ ElevatorState* ep1;
 
 
 
@@ -30,20 +35,15 @@ typedef enum {
 */
  int go_to_defined_pos();
 
-
 /**
-* @brief Start up of the system.
-*/
-//void update_elevator_state(ElevatorState* ep);
-
-
-
-/**
-* @brief Start up of the system.
+* @brief
 */
 void initialize_elevator_state(ElevatorState* ep);
 
-void update_elevator_pos(ElevatorState* ep);
+/**
+* @brief
+*/
+void update_elevator_pos();
 
 
 #endif

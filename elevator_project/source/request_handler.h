@@ -9,8 +9,9 @@ typedef struct {
     HardwareOrder dir;
 } Order;
 
-Order destinations[HARDWARE_NUMBER_OF_FLOORS] = {{-1,1}};
-Order orders[10] = { {-1, 1} };
+
+extern Order destinations[HARDWARE_NUMBER_OF_FLOORS];
+extern Order orders[10];
 
 
 void place_order(Order* op, ElevatorState* ep);
