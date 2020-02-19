@@ -1,5 +1,7 @@
 #include "hardware.h"
 #include "elevator_state.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #ifndef request_handler_h
 #define request_handler_h

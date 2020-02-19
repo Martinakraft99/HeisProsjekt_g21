@@ -9,7 +9,7 @@ void place_order(Order* op, ElevatorState* ep) {
 		destinations[0] = *op;
 		return;
 	}
-	
+
 	for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
 		if (op->destination == destinations[i].destination){
 			return;
@@ -65,9 +65,9 @@ void destination_sort_descending(){
 }
 
 void swap(Order *o1, Order *o2){
-	Order* temp = o1;
-	o1 = o2;
-	o2 = temp;
+	Order temp = *o1;
+	*o1 = *o2;
+	*o2 = temp;
 }
 
 

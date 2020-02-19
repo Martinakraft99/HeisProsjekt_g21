@@ -1,5 +1,5 @@
 #include "motor_state.h"
-#include <time.h>
+#include <unistd.h>
 
 void motorStateMachine(Floor dest, Floor pos){
   int diff = dest-pos;
@@ -19,8 +19,8 @@ void move_elevator() {
 
       if (ep1->pos == destinations[0].destination) {
           deleteFirstDestination();
-          clock_t currTime = clock();
-          while (clock() < currTime + 3000);
+          sleep(1);
+
       }
   }
 
