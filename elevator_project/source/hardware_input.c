@@ -1,5 +1,6 @@
 #include "hardware_input.h"
 #include <stdio.h>
+#include "request_handler.h"
 
 
 int readFloors(){
@@ -17,6 +18,7 @@ void takeOrder(Order* op){
             if(hardware_read_order(i,j)==1){
                 op->destination =  i;
                 op->dir = j;
+                new_request(op);
             }
         }
     }
