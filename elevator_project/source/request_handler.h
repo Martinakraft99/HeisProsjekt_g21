@@ -22,6 +22,7 @@ void destination_sort_descending();
 void swap(Order *o1, Order *o2);
 void fillDestination();
 void deleteFirstDestination();
+void clear_orders();
 
 
 #endif

@@ -22,28 +22,29 @@ static void clear_all_order_lights() {
     }
 }
 
-
-
+void printOperatingInfo(ElevatorState* ep){
+  int check_floor = readFloors();
+  if (( check_floor != -1) && (check_floor != ep1->pos) ) {
+    printf("Floor %d:\nDestination: ", check_floor+1);
+    for(int i = 0; i< HARDWARE_NUMBER_OF_FLOORS;i++){
+      printf("%d ", destinations[i].destination+1);
+    }
+    printf("\nOrders: ");
+    for(int i = 0; i< NUMBER_OF_POSSIBLE_ORDERS;i++){
+      printf("%d ", orders[i].destination+1);
+    }
+    printf("\n");
+  }
+}
 
 
 int main() {
 
-
-    
     start_system();
 
-
-
     while (!hardware_read_stop_signal()){
-      int check_floor = readFloors();
-      if (( check_floor != -1) && (check_floor != ep1->pos) ) {
-        printf("Floor %d:\nDestination: ", check_floor+1);
-        for(int i = 0; i< HARDWARE_NUMBER_OF_FLOORS;i++){
-          printf("%d ", destinations[i].destination+1);
-        }
-        printf("\n");
-      }
 
+      printOperatingInfo(ep1);
 
       update_elevator_pos();
 
@@ -53,10 +54,10 @@ int main() {
 
       move_elevator();
 
+      if(destinations[0].destination == -1){
+        fillDestination(ep1);
+      }
     }
-
-
-
 
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 

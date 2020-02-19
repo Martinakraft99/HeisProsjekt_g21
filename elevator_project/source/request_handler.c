@@ -1,7 +1,7 @@
 #include "request_handler.h"
 
 Order destinations[HARDWARE_NUMBER_OF_FLOORS] = {{-1,1}, {-1,1}, {-1,1}, {-1,1}};
-Order orders[10] = {{-1,1}};
+Order orders[10] = {{-1,1},{-1,1},{-1,1},{-1,1},{-1,1},{-1,1},{-1,1},{-1,1},{-1,1},{-1,1}};
 
 
 void place_order(Order* op, ElevatorState* ep) {
@@ -41,6 +41,7 @@ void place_order(Order* op, ElevatorState* ep) {
 	}
 	for (int i = 0; i < NUMBER_OF_POSSIBLE_ORDERS; i++){
 		if (orders[i].destination == -1){
+			printf("HIT");
 			orders[i] = *op;
 			return;
 		}
