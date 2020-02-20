@@ -21,7 +21,7 @@
 /**
 * @brief Last element in enum @c HardwareOrder used for iterating through elements in function @c hardware_input_take_order.
 */
-#define HardwareOrderLast 3
+#define HardwareOrderLast 2
 
 /**
 * @brief Iterate floors.

@@ -20,8 +20,8 @@ typedef enum { undef = -1, first, second, third, fourth } Floor;
 */
 typedef struct {
     Floor pos;
-    HardwareOrder dir;
-} Order;
+    HardwareMovement dir;
+} Elevator;
 
 #include "hardware_input.h"
 #include "start_system.h"
@@ -31,8 +31,7 @@ typedef struct {
 /**
 * @brief Elevator state.
 */
-Order* ELEVATOR_STATE;
-
+Elevator* ELEVATOR_STATE;
 
 /**
 * @brief
@@ -48,7 +47,7 @@ void elevator_state_update_pos();
 * @brief
 * @return floor.
 */
- int go_to_defined_pos();
+ int elevator_state_go_to_defined_pos();
 
 
 /**

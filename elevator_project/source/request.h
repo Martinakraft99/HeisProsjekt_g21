@@ -11,6 +11,11 @@
 #include "hardware.h"
 #include "elevator_state.h"
 
+typedef struct {
+    Floor pos;
+    HardwareOrder dir;
+} Order;
+
 /**
 * @brief Array for elevator target priorities.
 */
@@ -24,32 +29,32 @@ Order orders[HARDWARE_NUMBER_OF_ORDER_BUTTONS];
 /**
 * @brief
 */
-void place_order(Order* op);
+void request_place_order(Order* op);
 
 /**
 * @brief
 */
-void destination_sort_ascending();
+void request_destination_sort_ascending();
 
 /**
 * @brief
 */
-void destination_sort_descending();
+void request_destination_sort_descending();
 
 /**
 * @brief
 */
-void swap(Order *o1, Order *o2);
+void request_swap_order(Order *o1, Order *o2);
 
 /**
 * @brief
 */
-void fillDestination();
+void request_fill_destination();
 
 /**
 * @brief
 */
-void deleteFirstDestination();
+void request_delete_first_destination();
 
 /**
 * @brief

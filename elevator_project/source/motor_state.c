@@ -1,22 +1,37 @@
 #include "motor_state.h"
+#include <time.h>
 
+clock_t time_wait = 0;
 
-
-void motor_state_elevator_transition(Floor dest, Floor pos){
+void motor_state_elevator_transition(Floor dest, Floor pos) {
     int diff = dest-pos;
-    if ( diff < 0 ) hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-    if ( diff > 0 ) hardware_command_movement(HARDWARE_MOVEMENT_UP);
-    if ( diff == 0) hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+    if ( diff < 0 ) {
+        hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
+        ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_DOWN;
+    }
+    if ( diff > 0 ) {
+        hardware_command_movement(HARDWARE_MOVEMENT_UP);
+        ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_UP;
+    }
+    if ( diff == 0) {
+        hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+        ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_STOP;
+    }
 }
 
 void motor_state_move_elevator() {
-    if ( destinations[0].pos != -1 ) {
-        motor_state_elevator_transition(destinations[0].pos, ELEVATOR_STATE->pos);
-        if (ELEVATOR_STATE->pos == destinations[0].pos) {
-            deleteFirstDestination();
+    if (destinations->pos == undef)
+        request_fill_destination();
+
+    if ( destinations->pos != undef ) {
+        motor_state_elevator_transition(destinations->pos, ELEVATOR_STATE->pos);
+        if (ELEVATOR_STATE->pos == destinations->pos) {
+            for (int i = HardwareOrderStart; i <= HardwareOrderLast; i++)
+                hardware_command_order_light(ELEVATOR_STATE->pos, i, 0);
+            request_delete_first_destination();
+            hardware_command_door_open(1);
+            time_wait = clock() + CLOCKS_PER_SEC * 1;
         }
-        //clock_t stop_time = clock();
-        //while (clock() < stop_time + CLOCKS_PER_SEC*1);
     }
 
 }
