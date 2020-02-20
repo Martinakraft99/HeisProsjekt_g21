@@ -21,6 +21,8 @@ void elevator_state_update_pos(){
 void elevator_state_initialize(){
     ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_STOP;
     ELEVATOR_STATE->pos = elevator_state_go_to_defined_pos();
+
+
     return;
 }
 

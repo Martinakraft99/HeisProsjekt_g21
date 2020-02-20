@@ -90,6 +90,11 @@ void clear_orders() {
 		orders[i] = (Order){undef, HARDWARE_MOVEMENT_STOP};
 }
 
+void clear_destinations(){
+	for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
+	destinations[i] = (Order){undef, HARDWARE_MOVEMENT_STOP};
+}
+
 void request_delete_first_destination() {
 		for (int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++) {
 				if (orders[i].pos == destinations->pos)
@@ -104,6 +109,10 @@ void request_delete_first_destination() {
 
 
 void request_fill_destination() {
+		if (orders[0].pos != undef){
+			destinations[0] = orders[0];
+			ELEVATOR_STATE->dir = destinations[0].dir;
+		}
 		Order orders_copy[HARDWARE_NUMBER_OF_ORDER_BUTTONS];
 		for(int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++)
 				orders_copy[i] = orders[i];

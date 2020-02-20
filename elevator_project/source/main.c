@@ -31,7 +31,8 @@ void print_operating_info() {
     int check_floor = hardware_input_read_floors();
     if (( check_floor != undef) && (check_floor != ELEVATOR_STATE->pos) ) {
 
-        printf("Floor %d:\nDestination: ", check_floor+1);
+        printf("\nFloor %d \nDirection: %d", check_floor+1,((ELEVATOR_STATE->dir)-1)*(-1));
+        printf("\nDestinations: ");
         for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++) {
             printf("%d ", destinations[i].pos+1);
         }
@@ -45,26 +46,55 @@ void print_operating_info() {
 }
 
 
+
+void stop_elevator(){
+
+  while(hardware_read_stop_signal()){
+
+    hardware_command_stop_light(hardware_read_stop_signal());
+
+    hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+
+    clear_orders();
+    clear_destinations();
+
+  }
+  hardware_command_stop_light(hardware_read_stop_signal());
+}
+
+void run_elevator_syst(){
+
+  while (!hardware_read_stop_signal()) {
+    
+        print_operating_info();
+
+        elevator_state_update_pos();
+
+        print_operating_info();
+
+
+        elevator_state_update_floor_light();
+        hardware_input_take_order();
+
+        if (clock() > time_wait) {
+            hardware_command_door_open(0);
+            motor_state_move_elevator();
+        }
+  }
+  stop_elevator();
+
+  clear_all_order_lights();
+
+}
+
 int main() {
 
     start_system();
 
-    while (!hardware_read_stop_signal()) {
+    while(1){
+    run_elevator_syst();
 
-          print_operating_info();
-
-          elevator_state_update_pos();
-          elevator_state_update_floor_light();
-          hardware_input_take_order();
-
-          if (clock() > time_wait) {
-              hardware_command_door_open(0);
-              motor_state_move_elevator();
-          }
+    printf("Stopped\n");
     }
-
-    hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-    clear_all_order_lights();
-
     return 0;
 }

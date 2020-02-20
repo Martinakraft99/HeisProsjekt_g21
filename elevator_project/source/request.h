@@ -61,4 +61,9 @@ void request_delete_first_destination();
 */
 void clear_orders();
 
+/**
+* @brief
+*/
+void clear_destinations();
+
 #endif
