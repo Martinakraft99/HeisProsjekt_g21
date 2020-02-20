@@ -1,8 +1,6 @@
 #include "start_system.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
+
 
 void sigint_handler(int sig) {
     (void)(sig);
@@ -23,5 +21,5 @@ void start_system() {
     printf("\n=== Running elevator program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
-    initialize_elevator_state();
+    elevator_state_initialize();
 }

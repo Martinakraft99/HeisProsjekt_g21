@@ -1,11 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-
-#include "start_system.h"
-#include "hardware_input.h"
-#include "hardware.h"
 #include "elevator_state.h"
+
+
 
 Order* ELEVATOR_STATE = &(Order){-1, 0};
 
@@ -18,7 +13,7 @@ int go_to_defined_pos(){
 }
 
 
-void update_elevator_pos(){
+void elevator_state_update_pos(){
   if(hardware_input_read_floors() != -1){
     ELEVATOR_STATE->pos = hardware_input_read_floors();
   }
@@ -34,7 +29,7 @@ void update_elevator_pos(){
 }
 */
 
-void initialize_elevator_state(){
+void elevator_state_initialize(){
     ELEVATOR_STATE->dir = 0;
     ELEVATOR_STATE->pos = go_to_defined_pos();
     return;

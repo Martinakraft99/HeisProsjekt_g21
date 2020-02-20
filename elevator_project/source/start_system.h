@@ -6,6 +6,10 @@
 #ifndef START_SYSTEM_H
 #define START_SYSTEM_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+
 #include "hardware.h"
 #include "elevator_state.h"
 

@@ -8,12 +8,13 @@
 #include <unistd.h>
 #include <time.h>
 
+#include "elevator_state.h"
 #include "hardware.h"
 #include "hardware_input.h"
-#include "elevator_state.h"
 #include "motor_state.h"
 #include "start_system.h"
-#include "request_handler.h"
+#include "request.h"
+
 
 static void clear_all_order_lights() {
   HardwareOrder order_types[3] = { HARDWARE_ORDER_UP, HARDWARE_ORDER_INSIDE, HARDWARE_ORDER_DOWN };
@@ -45,18 +46,18 @@ void print_operating_info() {
 int main() {
 
     start_system();
+
     while ( !hardware_read_stop_signal() ){
+          print_operating_info();
 
-        if ( 1 ) {
+          elevator_state_update_pos();
+          elevator_state_update_floor_light();
 
-            print_operating_info();
-            update_elevator_pos();
-            elevator_state_update_floor_light();
-            hardware_input_take_order();
-            motor_state_move_elevator();
+          hardware_input_take_order();
 
-        }
-        if (destinations[0].pos == -1) { fillDestination(); }
+          motor_state_move_elevator();
+
+          if (destinations[0].pos == -1) { fillDestination(); }
   }
 
   hardware_command_movement(HARDWARE_MOVEMENT_STOP);

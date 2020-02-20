@@ -3,9 +3,10 @@ var indexSectionsWithContent =
   0: "efghmors",
   1: "o",
   2: "ehmrs",
-  3: "ghrs",
+  3: "ghs",
   4: "e",
-  5: "fh"
+  5: "fh",
+  6: "h"
 };
 
 var indexSectionNames =
@@ -15,7 +16,8 @@ var indexSectionNames =
   2: "files",
   3: "functions",
   4: "variables",
-  5: "enums"
+  5: "enums",
+  6: "defines"
 };
 
 var indexSectionLabels =
@@ -25,6 +27,7 @@ var indexSectionLabels =
   2: "Files",
   3: "Functions",
   4: "Variables",
-  5: "Enumerations"
+  5: "Enumerations",
+  6: "Macros"
 };
 

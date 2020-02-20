@@ -1,8 +1,9 @@
-#include "request_handler.h"
+#include "request.h"
+#include "elevator_state.h"
+
 
 Order destinations[HARDWARE_NUMBER_OF_FLOORS] = { [0 ... HARDWARE_NUMBER_OF_FLOORS-1] = {-1,1} };
 Order orders[HARDWARE_NUMBER_OF_ORDER_BUTTONS] = { [0 ... HARDWARE_NUMBER_OF_ORDER_BUTTONS-1] = {-1,1} };
-
 
 void place_order(Order* op) {
 		if (destinations[0].pos == -1 && orders[0].pos == -1) {
@@ -68,7 +69,6 @@ void swap(Order *o1, Order *o2) {
 		*o2 = temp;
 }
 
-
 void sort_orders() {
 	for (int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++)
 		if (orders[i].pos == -1) for (int j = i + 1; j < HARDWARE_NUMBER_OF_ORDER_BUTTONS; j++)
@@ -95,9 +95,6 @@ void deleteFirstDestination() {
 	destinations[HARDWARE_NUMBER_OF_FLOORS - 1].pos = -1;
 	destinations[HARDWARE_NUMBER_OF_FLOORS - 1].dir = 1;
 }
-
-
-
 
 void clear_orders() {
 	for (int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++) {

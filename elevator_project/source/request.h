@@ -3,21 +3,21 @@
 * @brief Request handler.
 *
 */
-#ifndef REQUEST_HANDLER_H
-#define REQUEST_HANDLER_H
+#ifndef REQUEST_H
+#define REQUEST_H
 
-#include "hardware.h"
-#include "elevator_state.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "hardware.h"
+#include "elevator_state.h"
 
 /**
-* @brief
+* @brief Array for elevator target priorities.
 */
 Order destinations[HARDWARE_NUMBER_OF_FLOORS];
 
 /**
-* @brief
+* @brief Array for elevator target sub-priorities.
 */
 Order orders[HARDWARE_NUMBER_OF_ORDER_BUTTONS];
 

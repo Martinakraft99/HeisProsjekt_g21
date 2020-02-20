@@ -6,7 +6,9 @@
 #ifndef ELEVATOR_STATE_H
 #define ELEVATOR_STATE_H
 
+#include <stdio.h>
 #include "hardware.h"
+
 
 /**
 * @brief Floor position used in struct @c Order.
@@ -21,23 +23,26 @@ typedef struct {
     HardwareOrder dir;
 } Order;
 
+#include "hardware_input.h"
+#include "start_system.h"
+#include "motor_state.h"
+#include "request.h"
+
 /**
 * @brief Elevator state.
 */
 Order* ELEVATOR_STATE;
 
-#include "request_handler.h"
-#include "motor_state.h"
 
 /**
 * @brief
 */
-void initialize_elevator_state();
+void elevator_state_initialize();
 
 /**
 * @brief
 */
-void update_elevator_pos();
+void elevator_state_update_pos();
 
 /**
 * @brief
