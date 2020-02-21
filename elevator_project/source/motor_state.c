@@ -1,6 +1,5 @@
 #include "motor_state.h"
 
-clock_t time_wait = 0;
 
 void motor_state_elevator_transition(Floor dest, Floor pos) {
 
@@ -43,8 +42,8 @@ void motor_state_move_elevator() {
             for (int i = HardwareOrderStart; i <= HardwareOrderLast; i++)
                 hardware_command_order_light(ELEVATOR_STATE->pos, i, 0);
             request_delete_first_destination();
-            hardware_command_door_open(1);
             time_wait = clock() + CLOCKS_PER_SEC * 1;
+            door_door_state_machine();
         }
     }
 

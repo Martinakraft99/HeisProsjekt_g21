@@ -23,7 +23,7 @@ void request_place_order(Order* op) {
 		int diff = op->pos - ELEVATOR_STATE->pos;
 
 		if (diff == 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_STOP) {
-				// doors()
+				door_door_state_machine();
 				return;
 		}
 

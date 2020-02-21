@@ -3,7 +3,7 @@
 # konstanter for kildemappe, kilder, byggemappe og objektfiler
 # patsubst tar inn et mønster som blir applisert med substitusjon i en tekst
 SOURCE_DIR := source
-SOURCES := main.c start_system.c hardware_input.c elevator_state.c motor_state.c request.c 
+SOURCES := main.c system_operation.c start_system.c hardware_input.c elevator_state.c motor_state.c request.c door.c
 BUILD_DIR := build
 OBJ := $(patsubst %.c, $(BUILD_DIR)/%.o, $(SOURCES) )
 

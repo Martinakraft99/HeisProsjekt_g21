@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include "hardware.h"
 #include "elevator_state.h"
+#include "door.h"
 
 typedef struct {
     Floor pos;
