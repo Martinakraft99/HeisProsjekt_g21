@@ -1,7 +1,7 @@
 /**
 * @file
-* @brief Request handler.
-*
+* @brief Defines an order, and is responsible the arrays containing them. 
+* 
 */
 #ifndef REQUEST_H
 #define REQUEST_H
@@ -12,6 +12,9 @@
 #include "elevator_state.h"
 #include "door.h"
 
+/**
+ *@brief Defines a order 
+ */
 typedef struct {
     Floor pos;
     HardwareOrder dir;
@@ -28,42 +31,42 @@ Order destinations[HARDWARE_NUMBER_OF_FLOORS];
 Order orders[HARDWARE_NUMBER_OF_ORDER_BUTTONS];
 
 /**
-* @brief
+* @brief Places an order into either destinations or orders based upon the member values of the order and current elements in the lists
 */
 void request_place_order(Order* op);
 
 /**
-* @brief
+* @brief Puts the valid elements in the destinations-list in ascending order
 */
 void request_destination_sort_ascending();
 
 /**
-* @brief
+* @brief Puts the valid elements in the destinations-list in descending order
 */
 void request_destination_sort_descending();
 
 /**
-* @brief
+* @brief Swaps the pointers of two Order elements
 */
 void request_swap_order(Order *o1, Order *o2);
 
 /**
-* @brief
+* @brief Fills up the destinations list with elements from the order list
 */
 void request_fill_destination();
 
 /**
-* @brief
+* @brief deletes the first element in destinations and move the remainding elements one place towards the front
 */
 void request_delete_first_destination();
 
 /**
-* @brief
+* @brief Removes all elements in order and replaces them with invalid elements 
 */
 void clear_orders();
 
 /**
-* @brief
+* @brief Removes all elements in destinations and replaces them with invalid elements 
 */
 void clear_destinations();
 

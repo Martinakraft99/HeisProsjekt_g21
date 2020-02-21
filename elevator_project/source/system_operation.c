@@ -1,19 +1,6 @@
 #include "system_operation.h"
 
 
-
-
-static void clear_all_order_lights() {
-  HardwareOrder order_types[3] = { HARDWARE_ORDER_UP, HARDWARE_ORDER_INSIDE, HARDWARE_ORDER_DOWN };
-
-  for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
-    for(int i = 0; i < 3; i++){
-      HardwareOrder type = order_types[i];
-      hardware_command_order_light(f, type, 0);
-    }
-  }
-}
-
 void print_operating_info() {
     int check_floor = hardware_input_read_floors();
     if (( check_floor != undef) && (check_floor != ELEVATOR_STATE->pos) ) {
@@ -32,11 +19,21 @@ void print_operating_info() {
     }
 }
 
+static void clear_all_order_lights() {
+  HardwareOrder order_types[3] = { HARDWARE_ORDER_UP, HARDWARE_ORDER_INSIDE, HARDWARE_ORDER_DOWN };
 
+  for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
+    for(int i = 0; i < 3; i++){
+      HardwareOrder type = order_types[i];
+      hardware_command_order_light(f, type, 0);
+    }
+  }
+}
 
 void stop_elevator(){
 
   while(hardware_read_stop_signal()){
+
 
     hardware_command_stop_light(hardware_read_stop_signal());
 
@@ -63,7 +60,7 @@ void run_elevator_syst(){
         elevator_state_update_floor_light();
         hardware_input_take_order();
 
-        if (clock() > time_wait) {
+        if (clock() >time_wait ) {
             hardware_command_door_open(0);
             motor_state_move_elevator();
         }
@@ -72,5 +69,19 @@ void run_elevator_syst(){
   stop_elevator();
 
   clear_all_order_lights();
+
+}
+
+int timer(int duration){
+  clock_t start = clock(), diff;
+  diff = 0;
+  while(diff<duration){
+    hardware_input_take_order();
+    diff = clock()-start;
+  }
+  return 1;
+  
+  
+
 
 }

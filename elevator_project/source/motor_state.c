@@ -27,9 +27,10 @@ void motor_state_elevator_transition(Floor dest, Floor pos) {
 
         hardware_command_movement(HARDWARE_MOVEMENT_STOP);
         ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_STOP;
-
+        door_door_state_machine();
       }
 }
+
 
 void motor_state_move_elevator() {
     if (destinations->pos == undef)
@@ -43,7 +44,7 @@ void motor_state_move_elevator() {
                 hardware_command_order_light(ELEVATOR_STATE->pos, i, 0);
             request_delete_first_destination();
             time_wait = clock() + CLOCKS_PER_SEC * 1;
-            door_door_state_machine();
+            //door_door_state_machine();
         }
     }
 

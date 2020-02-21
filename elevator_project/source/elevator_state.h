@@ -16,7 +16,7 @@
 typedef enum { undef = -1, first, second, third, fourth } Floor;
 
 /**
-* @brief
+* @brief Represent the real-world elevator
 */
 typedef struct {
     Floor pos;
@@ -34,24 +34,24 @@ typedef struct {
 Elevator* ELEVATOR_STATE;
 
 /**
-* @brief
+* @brief initialize the elevator-struct with a valid position and direction
 */
 void elevator_state_initialize();
 
 /**
-* @brief
+* @brief 
 */
 void elevator_state_update_pos();
 
 /**
-* @brief
+* @brief Moves the elevator to a defined position
 * @return floor.
 */
  int elevator_state_go_to_defined_pos();
 
 
 /**
-* @brief
+* @brief 
 */
 void elevator_state_update_floor_light();
 

@@ -17,10 +17,27 @@
 #include "start_system.h"
 #include "request.h"
 
-//static void clear_all_order_lights();
+/**
+ * @brief Displays the the the position and direction of the elevator, and the elemets in both destinations and orders
+ */
 void print_operating_info();
+
+/**
+ * Performes the stop-procedure. 
+ * 
+ * @param [out] destinations Is cleared
+ * @param [out] orders Is cleared
+ * @param [out] ELAVATOR_STATE direction is set to HARDWARE_MOVEMENT_STOP
+ */
 void stop_elevator();
+
+/**
+ * @brief Orchestrates the necessary procedure for running the elevator system
+ */
 void run_elevator_syst();
+
+
+int timer(int duration);
 
 
 

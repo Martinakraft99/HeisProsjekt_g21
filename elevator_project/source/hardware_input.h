@@ -1,7 +1,7 @@
 /**
 * @file
 * @brief Hardware input.
-*
+*Iterates through floor sensors and order buttons using functions defined in hardware.h
 */
 #ifndef HARDWARE_INPUT_H
 #define HARDWARE_INPUT_H
@@ -24,14 +24,14 @@
 #define HardwareOrderLast 2
 
 /**
-* @brief Iterate floors.
+* @brief Iterate through floors looking for a sensor-read
 *
 * @return int floor.
 */
 int hardware_input_read_floors();
 
 /**
-* @brief
+* @brief Iterates through different order-inputs, and create and divert valid orders.
 */
 void hardware_input_take_order();
 

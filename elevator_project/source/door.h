@@ -7,10 +7,9 @@
 #include "hardware.h"
 #include "hardware_input.h"
 #include "elevator_state.h"
-#include <time.h>
+#include "system_operation.h"
 
 clock_t time_wait;
-
 
 
 
