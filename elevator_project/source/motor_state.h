@@ -11,6 +11,7 @@
 #include "hardware.h"
 #include "elevator_state.h"
 #include "request.h"
+#include "hardware_input.h"
 /**
 * @brief
 */

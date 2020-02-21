@@ -65,7 +65,7 @@ void stop_elevator(){
 void run_elevator_syst(){
 
   while (!hardware_read_stop_signal()) {
-    
+
         print_operating_info();
 
         elevator_state_update_pos();
