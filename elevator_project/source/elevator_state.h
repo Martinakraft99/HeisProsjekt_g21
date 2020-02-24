@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include "hardware.h"
 
-
 /**
 * @brief Floor position used in struct @c Order.
 */
@@ -48,7 +47,6 @@ void elevator_state_update_pos();
 * @return floor.
 */
  int elevator_state_go_to_defined_pos();
-
 
 /**
 * @brief 

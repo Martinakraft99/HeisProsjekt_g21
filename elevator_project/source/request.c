@@ -6,23 +6,28 @@ Order orders[HARDWARE_NUMBER_OF_ORDER_BUTTONS] = { [0 ... HARDWARE_NUMBER_OF_ORD
 
 
 void request_place_order(Order* op) {
-		// no elements; place
+
+		// destinations:	{ {undef, x}, {}, {}, {} }
+		// orders:			{ {undef, x}, {}, ... , {} }
+
 		if (destinations->pos == undef && orders->pos == undef) {
 				destinations[0] = *op;
 				return;
 		}
 
-		// if exist, return
+		// check if order exist in destinations
 		for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
 				if (op->pos == destinations[i].pos) return;
 
-		for (int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++)
-				if (op->pos == orders[i].pos && op->dir == orders[i].dir) return;
+		//for (int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++)
+		//		if (op->pos == orders[i].pos && op->dir == orders[i].dir) return;
 
 
 		int diff = op->pos - ELEVATOR_STATE->pos;
 
-		if (diff == 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_STOP) {
+
+
+		if (!diff && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_STOP) {
 				door_door_state_machine();
 				return;
 		}
@@ -37,7 +42,7 @@ void request_place_order(Order* op) {
 				}
 		}
 
-		if (diff < 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_DOWN && op->dir != (int)HARDWARE_ORDER_UP) {
+		if (diff < 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_DOWN && op->dir != (int)HARDWARE_MOVEMENT_UP) {
 				for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++) {
 						if (destinations[i].pos == undef) {
 								destinations[i] = *op;
@@ -109,7 +114,7 @@ void request_delete_first_destination() {
 
 
 void request_fill_destination() {
-		if (orders[0].pos != undef){
+		if (orders->pos != undef){
 			destinations[0] = orders[0];
 			ELEVATOR_STATE->dir = destinations[0].dir;
 		}

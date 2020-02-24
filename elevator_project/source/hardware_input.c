@@ -1,7 +1,5 @@
 #include "hardware_input.h"
 
-
-
 int hardware_input_read_floors() {
     for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
         if (hardware_read_floor_sensor(i))

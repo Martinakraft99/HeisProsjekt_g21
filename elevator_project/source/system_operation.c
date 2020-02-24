@@ -1,6 +1,5 @@
 #include "system_operation.h"
 
-
 void print_operating_info() {
     int check_floor = hardware_input_read_floors();
     if (( check_floor != undef) && (check_floor != ELEVATOR_STATE->pos) ) {
@@ -46,7 +45,7 @@ void stop_elevator(){
   hardware_command_stop_light(hardware_read_stop_signal());
 }
 
-void run_elevator_syst(){
+void run_elevator_syst() {
 
   while (!hardware_read_stop_signal()) {
 
@@ -60,7 +59,7 @@ void run_elevator_syst(){
         elevator_state_update_floor_light();
         hardware_input_take_order();
 
-        if (clock() >time_wait ) {
+        if (clock() > time_wait ) {
             hardware_command_door_open(0);
             motor_state_move_elevator();
         }
