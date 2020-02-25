@@ -38,7 +38,7 @@ Elevator* ELEVATOR_STATE;
 void elevator_state_initialize();
 
 /**
-* @brief 
+* @brief
 */
 void elevator_state_update_pos();
 
@@ -49,7 +49,7 @@ void elevator_state_update_pos();
  int elevator_state_go_to_defined_pos();
 
 /**
-* @brief 
+* @brief
 */
 void elevator_state_update_floor_light();
 

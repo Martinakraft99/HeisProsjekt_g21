@@ -1,29 +1,30 @@
 /**
 * @file
-* @brief Motor state. 
+* @brief Motor state.
 *
 */
 #ifndef MOTOR_STATE_H
 #define MOTOR_STATE_H
 
 #include <stdio.h>
+#include <time.h>
 #include "hardware.h"
 #include "elevator_state.h"
 #include "request.h"
 #include "hardware_input.h"
-#include "door.h"
+#include "system_operation.h"
 /**
 * @brief
 */
-//clock_t time_wait;
+clock_t time_wait;
 
 /**
  * @brief Sets the movement of the elevator based on the difference between the current position and destination
- * 
+ *
  * @param [in] dest The destination floor
  * @param [in] pos The current position of the elevator
  * @param [out] ELEVATOR_STATE direction is changed
- * 
+ *
  */
 void motor_state_transition(Floor dest, Floor pos);
 
