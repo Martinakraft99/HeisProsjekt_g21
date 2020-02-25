@@ -33,7 +33,7 @@ void request_place_order(Order* op) {
 	}
 
 	if(diff < 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_DOWN && op->dir != (int)HARDWARE_MOVEMENT_UP) {
-		for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
+		for(int i = i; i < HARDWARE_NUMBER_OF_FLOORS; i++)
 			if(destinations[i].pos == undef) {
 				destinations[i] = *op;
 				destinations_sort(descending);
@@ -83,6 +83,12 @@ void request_clear_all() {
 	orders_clear();
 }
 
+void swap_order(Order* o1, Order* o2) {
+		Order temp = *o1;
+		*o1 = *o2;
+		*o2 = temp;
+}
+
 void destinations_sort(SortMode S) {
 	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
 		for(int j = i+1; j < HARDWARE_NUMBER_OF_FLOORS; j++)
@@ -90,10 +96,9 @@ void destinations_sort(SortMode S) {
 				swap_order(&destinations[i], &destinations[j]);
 }
 
-void swap_order(Order* o1, Order* o2) {
-		Order temp = *o1;
-		*o1 = *o2;
-		*o2 = temp;
+void destinations_clear() {
+	for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
+		destinations[i] = (Order)ORDER_UNDEF;
 }
 
 void orders_sort() {
@@ -101,18 +106,13 @@ void orders_sort() {
 		if(orders[i].pos == undef)
 			for(int j = i+1; j < HARDWARE_NUMBER_OF_ORDER_BUTTONS; j++)
 				if(orders[j].pos != undef) {
-					orders[i] = orders[j];
+					orders[i], orders[j] = orders[j];
 					orders[j] = (Order)ORDER_UNDEF;
 					break;
 				}
 }
 
-void destinations_clear() {
-	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
-	destinations[i] = (Order)ORDER_UNDEF;
-}
-
 void orders_clear() {
 	for(int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++)
-	orders[i] = (Order)ORDER_UNDEF;
+		orders[i] = (Order)ORDER_UNDEF;
 }

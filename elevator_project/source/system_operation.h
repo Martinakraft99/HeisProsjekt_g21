@@ -18,9 +18,13 @@
 #include "start_system.h"
 #include "request.h"
 
-#define IDLE_TIME 1;
 /**
- * @brief Displays the the the position and direction of the elevator, and the elemets in both destinations and orders
+ * @brief Time door is kept open.
+ */
+#define IDLE_TIME 1;
+
+ /**
+ * @brief Displays the the the position and direction of the elevator, and the elemets in both destinations and orders.
  */
 void print_operating_info();
 
