@@ -8,8 +8,10 @@ void elevator_state_initialize() {
 }
 
 void elevator_state_update_pos() {
-    if (hardware_input_read_floors() != undef)
+    if (hardware_input_read_floors() != undef{
         ELEVATOR_STATE->pos = hardware_input_read_floors();
+        hardware_command_floor_indicator_on(ELEVATOR_STATE->pos);
+    }
 }
 
 int elevator_state_go_to_defined_pos() {
@@ -18,9 +20,4 @@ int elevator_state_go_to_defined_pos() {
 
   hardware_command_movement(HARDWARE_MOVEMENT_STOP);
   return hardware_input_read_floors();
-}
-
-void elevator_state_update_floor_light() {
-  if (ELEVATOR_STATE->pos != undef)
-    hardware_command_floor_indicator_on(ELEVATOR_STATE->pos);
 }

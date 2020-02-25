@@ -30,5 +30,6 @@ int floor_transition_actuation();
 /**
 * @brief Wait time :)
 */
-void time_inc()
+void motor_time_inc()
+
 #endif

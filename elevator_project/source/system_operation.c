@@ -1,16 +1,14 @@
 #include "system_operation.h"
 
 void system_operation_run() {
-
   while(!hardware_read_stop_signal()) {
 
     elevator_state_update_pos();
-    elevator_state_update_floor_light();
     hardware_input_take_order();
 
-    if(hardware_read_obstruction_signal() && clock() < time_wait && hardware_input_read_floors() != undef)
-      time_wait = clock() + CLOCKS_PER_SEC * IDLE_TIME;
-
+    if(hardware_read_obstruction_signal() && clock() < time_wait && hardware_input_read_floors() != undef) {
+        motor_state_time_inc();
+    }
     if(clock() > time_wait) {
       hardware_command_door_open(0);
       motor_state_move_elevator();
@@ -28,6 +26,7 @@ void clear_all_order_lights() {
 void stop_elevator() {
   hardware_command_stop_light(1);
   hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+
   if (hardware_input_read_floors() != undef)
     hardware_command_door_open(1);
 
@@ -35,7 +34,7 @@ void stop_elevator() {
 
   request_clear_all();
   clear_all_order_lights();
-  time_wait = clock() + CLOCKS_PER_SEC * IDLE_TIME;
+  motor_state_time_inc();
   hardware_command_stop_light(0);
 }
 

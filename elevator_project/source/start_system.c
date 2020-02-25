@@ -1,7 +1,5 @@
 #include "start_system.h"
 
-
-
 void sigint_handler(int sig) {
     (void)(sig);
     printf("Terminating elevator\n");

@@ -45,9 +45,4 @@ void elevator_state_update_pos();
 */
  int elevator_state_go_to_defined_pos();
 
-/**
-* @brief
-*/
-void elevator_state_update_floor_light();
-
 #endif
