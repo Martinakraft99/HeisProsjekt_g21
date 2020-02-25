@@ -78,6 +78,11 @@ void request_fill_destination() {
 			request_place_order(&orders_temp[i]);
 }
 
+void request_clear_all() {
+	destinations_clear();
+	orders_clear();
+}
+
 void destinations_sort(SortMode S) {
 	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
 		for(int j = i+1; j < HARDWARE_NUMBER_OF_FLOORS; j++)

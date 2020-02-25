@@ -5,11 +5,7 @@
 */
 #ifndef REQUEST_H
 #define REQUEST_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "hardware.h"
-#include "elevator_state.h"
+#include "system_operation.h"
 
 /**
  *@brief Struct used in array @c destinations and @c orders.
@@ -24,10 +20,10 @@ typedef struct {
 */
 #define ORDER_UNDEF {undef, HARDWARE_ORDER_INSIDE}
 
-typedef enum {
-	descending = -1,
-	ascending = 1
-} SortMode;
+/**
+* @brief Sort mode.
+*/
+typedef enum { descending = -1, ascending = 1 } SortMode;
 
 /**
 * @brief Requests in presceding elevator direction, top priority.
@@ -53,6 +49,11 @@ void request_fill_destination();
 * @brief deletes the first element in destinations and move the remainding elements one place towards the front
 */
 void request_delete_current_destination();
+
+/**
+* @brief cleares all orders
+*/
+void request_clear_all();
 
 /**
 * @brief Puts the valid elements in the destinations-list in ascending order
