@@ -5,31 +5,32 @@
 */
 #ifndef MOTOR_STATE_H
 #define MOTOR_STATE_H
-#include "system_operation.h"
 
+#include <stdio.h>
+#include <time.h>
+#include "hardware.h"
+#include "elevator_state.h"
+#include "request.h"
+#include "hardware_input.h"
+#include "system_operation.h"
 /**
 * @brief
 */
 clock_t time_wait;
 
 /**
-* @brief Either fills up the destination-list, or send a new destination to motor_state_elevator_transistion
-*/
-void motor_state_move_elevator();
-
-/**
  * @brief Sets the movement of the elevator based on the difference between the current position and destination
  *
- * @param[out] ELEVATOR_STATE direction is changed
- *
- * @return 1 if motor-actuation, 0 if idle.
+ * @param [in] dest The destination floor
+ * @param [in] pos The current position of the elevator
+ * @param [out] ELEVATOR_STATE direction is changed
  *
  */
-int floor_transition_actuation();
+void motor_state_transition(Floor dest, Floor pos);
 
 /**
-* @brief Wait time :)
-*/
-void motor_time_inc()
+ * @brief Either fills up the destination-list, or send a new destination to motor_state_elevator_transistion
+ */
+void motor_state_move_elevator();
 
 #endif

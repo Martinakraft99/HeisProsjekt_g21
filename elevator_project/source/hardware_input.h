@@ -1,10 +1,18 @@
 /**
 * @file
-* @brief Hardware input. Iterates through floor sensors and order buttons using functions defined in hardware.h
+* @brief Hardware input.
+*Iterates through floor sensors and order buttons using functions defined in hardware.h
 */
 #ifndef HARDWARE_INPUT_H
 #define HARDWARE_INPUT_H
-#include "system_operation.h"
+
+#include <stdio.h>
+#include "elevator_state.h"
+#include "hardware.h"
+
+
+
+#include "request.h"
 
 /**
 * @brief First element in enum @c HardwareOrder used for iterating through elements in function @c hardware_input_take_order.
