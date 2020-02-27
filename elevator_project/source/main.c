@@ -8,7 +8,8 @@
 int main() {
 
     start_system();
-    for(;;)run_elevator_syst();
+    while(1)
+    	system_operation_run();
 
     return 0;
 }

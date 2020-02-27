@@ -3,26 +3,27 @@
 Order destinations[HARDWARE_NUMBER_OF_FLOORS] = {[0 ... HARDWARE_NUMBER_OF_FLOORS-1] = ORDER_UNDEF};
 Order queue[HARDWARE_NUMBER_OF_ORDER_BUTTONS] = {[0 ... HARDWARE_NUMBER_OF_ORDER_BUTTONS-1] = ORDER_UNDEF};
 
+/* module functions */
+
 void request_place_order(Order* op) {
-	
-	if(destinations->pos == undef && queue->pos == undef) {
+	if (check_order_handled(op))
+		return;
+
+	if (destinations->pos == undef) {
 		destinations[0] = *op;
 		return;
 	}
-	
-	if (order_already_handled(op))
-		return;
 
 	int diff = op->pos - ELEVATOR_STATE->pos;
 
-	if(diff == 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_STOP) {
+	if (diff == 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_STOP) {
 		return;
 	}
-	if(diff > 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_UP && op->dir != (int)HARDWARE_MOVEMENT_DOWN) {
+	if (diff > 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_UP && op->dir != (int)HARDWARE_MOVEMENT_DOWN) {
 		for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
 			if(destinations[i].pos == undef) {
 				destinations[i] = *op;
-				orders_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, ascending);
+				order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, ascending);
 				return;
 			}
 	}
@@ -30,7 +31,7 @@ void request_place_order(Order* op) {
 		for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
 			if (destinations[i].pos == undef) {
 				destinations[i] = *op;
-				orders_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, descending);
+				order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, descending);
 				return;
 			}
 	}
@@ -45,18 +46,20 @@ void request_delete_current_destination() {
 	for (int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++)
 		if (queue[i].pos == destinations->pos)
 			queue[i] = (Order)ORDER_UNDEF;
-	orders_sort();
-	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS - 1; i++)
-		destinations[i] = destinations[i+1];
-	destinations[HARDWARE_NUMBER_OF_FLOORS-1] = (Order)ORDER_UNDEF;
+	order_arr_shift_to_start(queue, HARDWARE_NUMBER_OF_ORDER_BUTTONS);
+
+	destinations[0] = (Order)ORDER_UNDEF;
+	order_arr_shift_to_start(destinations, HARDWARE_NUMBER_OF_FLOORS);
 }
 
 void request_fill_destinations_from_queue() {
 	if (queue->pos != undef) {
 		destinations[0] = queue[0];
 		int diff = destinations->pos - ELEVATOR_STATE->pos;
-		if (diff < 0) ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_DOWN;
-		if (diff > 0) ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_UP;
+		if (diff < 0) 
+			ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_DOWN;
+		if (diff > 0) 
+			ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_UP;
 	}
 
 	Order queue_temp[HARDWARE_NUMBER_OF_ORDER_BUTTONS] = {[0 ... HARDWARE_NUMBER_OF_ORDER_BUTTONS-1] = ORDER_UNDEF};
@@ -70,11 +73,13 @@ void request_fill_destinations_from_queue() {
 }
 
 void request_clear_orders() {
-	orders_clear(destinations, (int)HARDWARE_NUMBER_OF_FLOORS);
-	orders_clear(queue, (int)HARDWARE_NUMBER_OF_ORDER_BUTTONS);
+	order_arr_clear(destinations, HARDWARE_NUMBER_OF_FLOORS);
+	order_arr_clear(queue, HARDWARE_NUMBER_OF_ORDER_BUTTONS);
 }
 
-int order_already_handled(Order *op) {
+/* help functions */
+
+int check_order_handled(Order *op) {
 	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
 		if(op->pos == destinations[i].pos)
 			return 1;
@@ -85,32 +90,30 @@ int order_already_handled(Order *op) {
 	return 0;
 }
 
-void orders_sort_pos(Order *arr, int i_max, SortMode S) {
-	for (int i = 0; i < i_max; i++)
-		for (int j = i+1; j < i_max; j++)
-			if (arr[j].pos != undef && arr[i].pos*S > arr[j].pos*S)
-				swap_order(&arr[i], &arr[j]);
-}
-
 void swap_order(Order* o1, Order* o2) {
 		Order temp = *o1;
 		*o1 = *o2;
 		*o2 = temp;
 }
 
-void orders_sort() {
-	for (int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++)
-		if (queue[i].pos == undef)
-			for (int j = i+1; j < HARDWARE_NUMBER_OF_ORDER_BUTTONS; j++)
-				if (queue[j].pos != undef) {
-					queue[i] = queue[j];
-					queue[j] = (Order)ORDER_UNDEF;
+void order_arr_sort_pos(Order *arr, int i_max, SortMode S) {
+	for (int i = 0; i < i_max; i++)
+		for (int j = i+1; j < i_max; j++)
+			if (arr[j].pos != undef && arr[i].pos*S > arr[j].pos*S)
+				swap_order(&arr[i], &arr[j]);
+}
+
+void order_arr_shift_to_start(Order *arr, int i_max) {
+	for (int i = 0; i < i_max; i++)
+		if (arr[i].pos == undef)
+			for (int j = i+1; j < i_max; j++)
+				if (arr[j].pos != undef) {
+					swap_order(&arr[i], &arr[j]);
 					break;
 				}
 }
 
-
-void orders_clear(Order *arr, int i_max) {
+void order_arr_clear(Order *arr, int i_max) {
 	for(int i = 0; i < i_max; i++)
 		arr[i] = (Order)ORDER_UNDEF;
 }

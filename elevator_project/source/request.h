@@ -45,21 +45,24 @@ Order queue[HARDWARE_NUMBER_OF_ORDER_BUTTONS];
 void request_place_order(Order* op);
 
 /**
-* @brief Fills up the destinations list with elements from the order list
-*/
-void request_fill_destinations_from_queue();
-
-/**
 * @brief deletes the first element in destinations and move the remainding elements one place towards the front
 */
 void request_delete_current_destination();
 
 /**
-* @brief Puts the valid elements in the destinations-list in ascending order
-*
-* @param S sort mode. -1 for descending and 1 for ascending.
+* @brief Fills up the destinations list with elements from the order list
 */
-void orders_sort_pos(Order *arr, int i_max, SortMode S);
+void request_fill_destinations_from_queue();
+
+/**
+* @brief .
+*/
+void request_clear_orders();
+
+/**
+* @brief .
+*/
+int check_order_handled(Order *op);
 
 /**
 * @brief Swaps the pointers of two Order elements
@@ -67,18 +70,21 @@ void orders_sort_pos(Order *arr, int i_max, SortMode S);
 void swap_order(Order *o1, Order *o2);
 
 /**
+* @brief Puts the valid elements in the destinations-list in ascending order
+*
+* @param S sort mode. -1 for descending and 1 for ascending.
+*/
+void order_arr_sort_pos(Order *arr, int i_max, SortMode S);
+
+/**
 * @brief Removes all elements in orders and replaces them with invalid elements
 */
-void orders_clear(Order *arr, int i_max);
+void order_arr_clear(Order *arr, int i_max);
 
 /**
 * @brief .
 */
-void orders_sort();
+void order_arr_shift_to_start(Order *arr, int i_max);
 
-
-void request_clear_orders();
-
-int order_already_handled(Order *op);
 
 #endif

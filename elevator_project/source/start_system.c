@@ -1,13 +1,15 @@
+/**
+* @file
+* @brief Source code start_system module.
+*/
 #include "start_system.h"
 
+/**
+* @brief Intern module function. Sigint handler.
+*/
+static void sigint_handler(int sig);
 
-
-void sigint_handler(int sig) {
-    (void)(sig);
-    printf("Terminating elevator\n");
-    hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-    exit(0);
-}
+/* module functions */
 
 void start_system() {
     int error = hardware_init();
@@ -18,8 +20,15 @@ void start_system() {
     }
     signal(SIGINT, sigint_handler);
 
-    printf("\n=== Running elevator program ===\n");
-    printf("Press the stop button on the elevator panel to exit\n");
-
+    printf("\n=== Running elevator program (Tufte and Kraft) ===\n");
     elevator_state_initialize();
+}
+
+/* help functions */
+
+static void sigint_handler(int sig) {
+    (void)(sig);
+    printf("Terminating elevator\n");
+    hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+    exit(0);
 }

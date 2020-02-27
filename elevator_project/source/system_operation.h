@@ -1,6 +1,6 @@
 /**
 * @file
-* @brief Hardware input.
+* @brief .
 *
 */
 #ifndef SYSTEM_OPERATION_H
@@ -10,18 +10,13 @@
 #include <signal.h>
 #include <unistd.h>
 #include <time.h>
-#include "elevator_state.h"
+
 #include "hardware.h"
 #include "hardware_input.h"
+#include "elevator_state.h"
 #include "motor_state.h"
 #include "start_system.h"
 #include "request.h"
-
-#define IDLE_TIME 1;
-/**
- * @brief Displays the the the position and direction of the elevator, and the elemets in both destinations and orders
- */
-void print_operating_info();
 
 /**
  * Performes the stop-procedure.
@@ -30,11 +25,21 @@ void print_operating_info();
  * @param [out] orders Is cleared
  * @param [out] ELAVATOR_STATE direction is set to HARDWARE_MOVEMENT_STOP
  */
-void stop_elevator();
+void system_operation_stop_elevator();
 
 /**
  * @brief Orchestrates the necessary procedure for running the elevator system
  */
-void run_elevator_syst();
+void system_operation_run();
+
+/**
+ * @brief Displays the position and direction of the elevator, and the elemets in both destinations and orders
+ */
+void print_operating_info();
+
+/**
+ * @brief Displays the the the position and direction of the elevator, and the elemets in both destinations and orders
+ */
+void clear_all_order_lights();
 
 #endif

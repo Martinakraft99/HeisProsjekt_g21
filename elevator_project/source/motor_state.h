@@ -13,10 +13,16 @@
 #include "request.h"
 #include "hardware_input.h"
 #include "system_operation.h"
+
 /**
 * @brief
 */
-clock_t time_wait;
+const int IDLE_TIME;
+
+/**
+* @brief
+*/
+clock_t time_door;
 
 /**
  * @brief Sets the movement of the elevator based on the difference between the current position and destination
@@ -26,11 +32,16 @@ clock_t time_wait;
  * @param [out] ELEVATOR_STATE direction is changed
  *
  */
-void motor_state_transition(Floor dest, Floor pos);
+void motor_state_transition();
 
 /**
  * @brief Either fills up the destination-list, or send a new destination to motor_state_elevator_transistion
  */
 void motor_state_move_elevator();
+
+/**
+ * @brief 
+ */
+void motor_state_time_inc();
 
 #endif
