@@ -5,11 +5,13 @@ Order queue[HARDWARE_NUMBER_OF_ORDER_BUTTONS] = {[0 ... HARDWARE_NUMBER_OF_ORDER
 
 /* module functions */
 
+
+
 void request_place_order(Order* op) {
 	if (check_order_handled(op))
 		return;
 
-	if (destinations->pos == undef) {
+	if (destinations->pos == undef && queue->pos == undef) {
 		destinations[0] = *op;
 		return;
 	}
@@ -19,27 +21,46 @@ void request_place_order(Order* op) {
 	if (diff == 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_STOP) {
 		return;
 	}
-	if (diff > 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_UP && op->dir != (int)HARDWARE_MOVEMENT_DOWN) {
-		for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
-			if(destinations[i].pos == undef) {
-				destinations[i] = *op;
-				order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, ascending);
-				return;
+	if (diff > 0 && (ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_UP || (destinations->dir == op->dir))/*((op->dir != HARDWARE_ORDER_DOWN)|| ((destinations->dir == HARDWARE_ORDER_DOWN)))*/) {
+		
+		if(op->dir != HARDWARE_ORDER_DOWN){
+
+			for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
+				
+				if(destinations[i].pos == undef ){
+					destinations[i] = *op;
+					return;
+				}
+
+		/*if(op->dir == HARDWARE_ORDER_DOWN && destinations->dir == HARDWARE_ORDER_DOWN && op-> pos > destinations->pos){
+			swap_order(&destinations[0],op);
+			push_to_queue(op);
+			return;*/
+		}
+/*
+				else if(destinations->dir == HARDWARE_ORDER_DOWN){
+					printf("Hit2\n");
+					swap_order(&destinations[i],op);
+					request_place_order(op);
+					print_operating_info();
+				}*/
 			}
+		
 	}
-	if (diff < 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_DOWN && op->dir != (int)HARDWARE_MOVEMENT_UP) {
-		for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++)
+	
+	if (diff < 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_DOWN && (op->dir != HARDWARE_ORDER_UP || destinations->dir == HARDWARE_ORDER_UP)) {
+		for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
 			if (destinations[i].pos == undef) {
 				destinations[i] = *op;
-				order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, descending);
+				if (destinations->dir == HARDWARE_ORDER_UP)
+					order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, ascending);
+				else
+					order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, descending);
 				return;
 			}
-	}
-	for (int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++)
-		if (queue[i].pos == undef) {
-			queue[i] = *op;
-			return;
 		}
+	}
+	push_to_queue(op);
 }
 
 void request_delete_current_destination() {
@@ -117,3 +138,31 @@ void order_arr_clear(Order *arr, int i_max) {
 	for(int i = 0; i < i_max; i++)
 		arr[i] = (Order)ORDER_UNDEF;
 }
+
+void push_to_queue(Order *op){
+	for (int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++)
+		if (queue[i].pos == undef) {
+			queue[i] = *op;
+			return;
+	}
+}
+
+
+
+				
+				/*
+				if (destinations->dir == HARDWARE_ORDER_DOWN)
+					order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, descending);
+				else
+					order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, ascending);
+
+				return;
+			}
+			else if(destinations[i].dir == HARDWARE_ORDER_DOWN){
+				for (int i = 0; i < HARDWARE_NUMBER_OF_ORDER_BUTTONS; i++){
+					if (queue[i].pos == undef) {
+						queue[i] = destinations[i];
+					}
+				}
+				destinations[i] = *op;
+*/

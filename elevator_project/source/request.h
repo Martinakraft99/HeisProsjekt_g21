@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include "hardware.h"
 #include "elevator_state.h"
+#include "system_operation.h"
 
 /**
  *@brief Struct used in array @c destinations and @c orders.
@@ -85,6 +86,9 @@ void order_arr_clear(Order *arr, int i_max);
 * @brief .
 */
 void order_arr_shift_to_start(Order *arr, int i_max);
+
+void push_to_queue(Order *op);
+
 
 
 #endif

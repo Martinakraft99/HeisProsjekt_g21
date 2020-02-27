@@ -3,10 +3,15 @@
 /* module functions */
 
 void system_operation_run() {
+
   while (!hardware_read_stop_signal()) {
 
     elevator_state_update_pos();
     hardware_input_take_order(); //setter på lys
+
+    
+
+ 
 
     if(clock() < time_door && hardware_read_obstruction_signal() && hardware_input_read_floors() != undef)
       motor_state_time_inc();
