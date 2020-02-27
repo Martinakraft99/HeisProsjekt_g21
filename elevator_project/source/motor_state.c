@@ -9,10 +9,14 @@ void motor_state_elevator_transition() {
 
   if (diff < 0) {
           hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-          ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_DOWN;     
+          if (hardware_input_read_floors() == undef && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_UP)
+          		++ELEVATOR_STATE->pos;     
+          ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_DOWN;
       }
   if (diff > 0) {
           hardware_command_movement(HARDWARE_MOVEMENT_UP);
+          if (hardware_input_read_floors() == undef && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_DOWN)
+          		--ELEVATOR_STATE->pos;
           ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_UP;
   }
   if (diff == 0) {
