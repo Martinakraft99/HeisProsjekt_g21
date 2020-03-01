@@ -1,6 +1,7 @@
 /**
 * @file
-* @brief Defines an order, and is responsible the arrays containing them.
+* @brief Defines two order arrays to keep track of requests from users. 
+* Responsible for the logic of placing a new order and deleting the current order.
 *
 */
 #ifndef REQUEST_H
@@ -13,30 +14,39 @@
 #include "system_operation.h"
 
 /**
- *@brief Struct used in array @c destinations and @c orders.
+ *@brief Struct used in array @c destinations and array @c queue.
  */
+
 typedef struct {
     Floor pos;
     HardwareOrder dir;
 } Order;
 
 /**
-* @brief Undefined Order type to initialize and reset @c destinations and @c orders.
+* @brief Undefined @c Order to initialize and reset @c destinations and @c queue.
 */
 #define ORDER_UNDEF {undef, HARDWARE_ORDER_INSIDE}
 
+/**
+ * @brief Sort mode used in @c order_arr_sort_pos to sort elements descending or ascending
+ */
 typedef enum {
 	descending = -1,
 	ascending = 1
 } SortMode;
 
 /**
-* @brief Requests in presceding elevator direction, top priority.
+* @brief Orders continuosly sorted in presceding elevator direction.
+* Elements are given the undefinite order type @c ORDER_UNDEF when not in use.
+* First element gives the nearest destination for @c motor_state.h to set motor actuation.
+* The array are used in 
 */
 Order destinations[HARDWARE_NUMBER_OF_FLOORS];
 
 /**
-* @brief Requests in none-presceding elevator direction, chronological order, sub-priorities.
+* @brief Contains orders for @c pos or @c dir in none-presceding elevator direction. 
+* Chronological. Sub-priorities.
+* Used in @c request_fill_destinations_from_queue to 
 */
 Order queue[HARDWARE_NUMBER_OF_ORDER_BUTTONS];
 
