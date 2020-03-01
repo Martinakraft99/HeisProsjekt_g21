@@ -1,6 +1,6 @@
 /**
 * @file
-* @brief Motor state.
+* @brief Motor state. Turns destination and current position into a signal for the motor, lights and door.
 *
 */
 #ifndef MOTOR_STATE_H
@@ -20,12 +20,12 @@
 const int IDLE_TIME;
 
 /**
-* @brief
+* @brief Referance time used in @c system_operation.h to keep track of doors open or not.
 */
 clock_t time_door;
 
 /**
- * @brief Sets the movement of the elevator based on the difference between the current position and destination
+ * @brief Sets the movement of the elevator based on the difference between the current position and destination.
  *
  * @param [in] dest The destination floor
  * @param [in] pos The current position of the elevator
@@ -35,12 +35,12 @@ clock_t time_door;
 void motor_state_transition();
 
 /**
- * @brief Either fills up the destination-list, or send a new destination to motor_state_elevator_transistion
+ * @brief Either fills up the @c destinations, or send a new order to @c motor_state_elevator_transistion
  */
 void motor_state_move_elevator();
 
 /**
- * @brief 
+ * @brief Set @c time_door to equal true time incremented by @c IDLE_TIME seconds.
  */
 void motor_state_time_inc();
 
