@@ -87,6 +87,10 @@ void order_arr_clear(Order *arr, int i_max);
 */
 void order_arr_shift_to_start(Order *arr, int i_max);
 
+/**
+* @brief Places an order element at the back of the order array.
+*/
+
 void push_to_queue(Order *op);
 
 

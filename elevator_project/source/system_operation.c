@@ -7,17 +7,13 @@ void system_operation_run() {
   while (!hardware_read_stop_signal()) {
 
     elevator_state_update_pos();
-    hardware_input_take_order(); //setter på lys
-
-    
-
- 
+    hardware_input_take_order();
 
     if(clock() < time_door && hardware_read_obstruction_signal() && hardware_input_read_floors() != undef)
       motor_state_time_inc();
 
     if (clock() > time_door ) {
-      hardware_command_door_open(0); // tar av lys?
+      hardware_command_door_open(0);
       motor_state_move_elevator();
     }
   } system_operation_stop_elevator();
@@ -29,7 +25,7 @@ void system_operation_stop_elevator() {
 
   if (hardware_input_read_floors() != undef)
       hardware_command_door_open(1);
-  
+
   while(hardware_read_stop_signal());
   print_operating_info();
   request_clear_orders();

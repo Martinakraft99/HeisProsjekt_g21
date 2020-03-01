@@ -21,41 +21,23 @@ void request_place_order(Order* op) {
 	if (diff == 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_STOP) {
 		return;
 	}
-	if (diff > 0 && (ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_UP || (destinations->dir == op->dir))/*((op->dir != HARDWARE_ORDER_DOWN)|| ((destinations->dir == HARDWARE_ORDER_DOWN)))*/) {
-		
-		if(op->dir != HARDWARE_ORDER_DOWN){
+	if (diff > 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_UP && op->dir != HARDWARE_ORDER_DOWN) {
 
 			for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
-				
+
 				if(destinations[i].pos == undef ){
 					destinations[i] = *op;
+					order_arr_sort_pos(destinations,HARDWARE_NUMBER_OF_FLOORS,ascending);
 					return;
 				}
-
-		/*if(op->dir == HARDWARE_ORDER_DOWN && destinations->dir == HARDWARE_ORDER_DOWN && op-> pos > destinations->pos){
-			swap_order(&destinations[0],op);
-			push_to_queue(op);
-			return;*/
-		}
-/*
-				else if(destinations->dir == HARDWARE_ORDER_DOWN){
-					printf("Hit2\n");
-					swap_order(&destinations[i],op);
-					request_place_order(op);
-					print_operating_info();
-				}*/
 			}
-		
 	}
-	
-	if (diff < 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_DOWN && (op->dir != HARDWARE_ORDER_UP || destinations->dir == HARDWARE_ORDER_UP)) {
+
+	if (diff < 0 && ELEVATOR_STATE->dir == HARDWARE_MOVEMENT_DOWN && op->dir != HARDWARE_ORDER_UP) {
 		for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
 			if (destinations[i].pos == undef) {
 				destinations[i] = *op;
-				if (destinations->dir == HARDWARE_ORDER_UP)
-					order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, ascending);
-				else
-					order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, descending);
+				order_arr_sort_pos(destinations,HARDWARE_NUMBER_OF_FLOORS,descending);
 				return;
 			}
 		}
@@ -77,9 +59,9 @@ void request_fill_destinations_from_queue() {
 	if (queue->pos != undef) {
 		destinations[0] = queue[0];
 		int diff = destinations->pos - ELEVATOR_STATE->pos;
-		if (diff < 0) 
+		if (diff < 0)
 			ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_DOWN;
-		if (diff > 0) 
+		if (diff > 0)
 			ELEVATOR_STATE->dir = HARDWARE_MOVEMENT_UP;
 	}
 
@@ -149,7 +131,7 @@ void push_to_queue(Order *op){
 
 
 
-				
+
 				/*
 				if (destinations->dir == HARDWARE_ORDER_DOWN)
 					order_arr_sort_pos(destinations, HARDWARE_NUMBER_OF_FLOORS, descending);
